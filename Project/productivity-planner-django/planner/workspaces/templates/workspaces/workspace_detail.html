@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h2 class="mb-0">{{ object.name }}</h2>
+    <p class="text-muted">{{ object.description }}</p>
+  </div>
+  <div>
+    <a href="{% url 'workspace_update' object.pk %}" class="btn btn-outline-secondary">Edit</a>
+    <a href="{% url 'workspace_delete' object.pk %}" class="btn btn-outline-danger">Delete</a>
+  </div>
+</div>
+<h4>Tasks in this workspace</h4>
+<ul class="list-group">
+  {% for t in tasks %}
+    <li class="list-group-item d-flex justify-content-between">
+      <a href="{% url 'task_detail' t.pk %}">{{ t.title }}</a>
+      <span class="badge-status status-{{ t.status }}">{{ t.get_status_display }}</span>
+    </li>
+  {% empty %}
+    <li class="list-group-item text-muted">No tasks here.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
